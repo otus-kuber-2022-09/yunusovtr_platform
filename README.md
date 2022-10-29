@@ -54,3 +54,22 @@ yunusovtr Platform repository
 - Создал statefullset и headless service для minio
 - Создал под с манифеста mc-pod.yaml, стартующий контейнер, в котором можно запускать команды утилиты mc. Испытал создание bucket внутри него.
 - Задание со *: Создал secret, куда поместил ключи для minio. Также настроил под для утилиты mc, автоматически подхватывающий эти секреты для настройки доступа к minio при создании пода.
+
+## Домашнее задание к уроку №6
+
+- Изучил документацию по role, clusterrole, rolebinding, clusterrolebinding на https://kubernetes.io/docs/reference/access-authn-authz/rbac
+- Используя документацию написал манифесты для задания task01, состоящие из трёх элементов:
+  - ServiceAccount bob
+  - ClusterRoleBinding bobAdmin
+  - ServiceAccount bob
+- Написал манифесты для задания task02, состоящие из элементов:
+  - Namespace prometheus
+  - ServiceAccount carol
+  - ClusterRole pods-reading
+  - ClusterRoleBinding prometheus-sa-pods-reading
+- Написал манифесты для задания task03, состоящие из элементов:
+  - Namespace dev
+  - ServiceAccount jane
+  - RoleBinding jane-admin-in-dev
+  - ServiceAccount ken
+  - RoleBinding ken-view-in-dev
