@@ -73,3 +73,21 @@ yunusovtr Platform repository
   - RoleBinding jane-admin-in-dev
   - ServiceAccount ken
   - RoleBinding ken-view-in-dev
+
+## Домашнее задание к уроку №7
+
+- Создал кластер через terraform в yandex cloud
+- Создал там nginx-controller командой helm upgrade --install nginx-ingress bitnami/nginx-ingress-controller --wait --namespace=nginx-ingress --create-namespace --version=9.2.28
+- Установил cert-manager командой helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.10.0 --set installCRDs=true
+- Установил ClusterIssuer для letsencrypt в окружении production
+- Нашёл свежий, скорректировал values.yaml, установил ChartMuseum helm upgrade --install chartmuseum chartmuseum/chartmuseum --wait --namespace=chartmuseum --create-namespace --version=3.9.1 -f kubernetes-templating/chartmuseum/values.yaml
+- Проверил https://chartmuseum.158.160.35.217.nip.io/ открывается страница и сертификат let's encrypt валиден.
+- Скачал и отредактировал values.yaml для последней версии harbor, установил его командой helm upgrade --install harbor harbor/harbor --wait --namespace=harbor --create-namespace -f kubernetes-templating/harbor/values.yaml
+- Установил приложение hipster-shop создав helm chart с коррекцией образа adservice на v0.3.4 т.к. прежнего тэга нет в репозитории
+- Выделил frontend в отдельный чарт с созданием ingress с выпуском сертификата
+- Шаблонизировал в frontend тэг образа, количество реплик, порты сервиса и тип сервиса (в случае типа сервиса NodePort добавляется nodePort в описание сервиса)
+- Добавил frontend в зависимости hipster-shop, удалил frontend отдельно, запустил как часть hipster-shop
+- Самостоятельное необязательное задание с установкой secrets не получилось
+- Перенёс деплойменты и сервисы сервисов paymentservice и shippingservice в отдельный каталог, создал по примеру файлы services.jsonnet
+- Не взлетело, скачал файл kube.libsonnet, поменял там устаревшую версию апи деплойментов, изменил импорт из файла services.jsonnet и тогда удалось установить эти сервисы командой kubecfg update services.jsonnet --namespace hipster-shop
+- Установил kustomize, вынес recomendationservice из основного helm chart, и создал две кастомизации: для hipster-shop и hipster-shop-prod окружений
