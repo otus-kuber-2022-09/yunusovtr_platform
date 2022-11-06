@@ -1,0 +1,6 @@
+resources:
+- ../../base
+namePrefix: stage-
+namespace: hipster-shop
+commonLabels:
+  environment: stage
