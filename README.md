@@ -91,3 +91,14 @@ yunusovtr Platform repository
 - Перенёс деплойменты и сервисы сервисов paymentservice и shippingservice в отдельный каталог, создал по примеру файлы services.jsonnet
 - Не взлетело, скачал файл kube.libsonnet, поменял там устаревшую версию апи деплойментов, изменил импорт из файла services.jsonnet и тогда удалось установить эти сервисы командой kubecfg update services.jsonnet --namespace hipster-shop
 - Установил kustomize, вынес recomendationservice из основного helm chart, и создал две кастомизации: для hipster-shop и hipster-shop-prod окружений
+
+## Домашнее задание к уроку №8
+
+- Создал образ с nginx. добавляющий location basic_status, публикующий метрики nginx (Dockerfile), запушил как yunusovtr/nginx-status
+- Создал локальный kind кластер
+- Установил prometheus-operator в кластер командой helm upgrade --install prom prometheus-community/kube-prometheus-stack --create-namespace -n prom
+- Установил deployment и service для созданного образа nginx-status в namespace default
+- Установил servicemonitor - для его принятия стандартным prometheus используется metadata: { labels: { release: prom } }
+- Проверил - метрики появились
+- Соотношение общего количества запросов принятыми разными подами nginx
+![](kubernetes-monitoring/screenshot.png)
